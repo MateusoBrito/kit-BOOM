@@ -1,27 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "kitBoom.h"
 
-typedef struct {
-    int xInicial, yInicial, xFinal, yFinal;
-    int comprimento;
-    char cor[3];
-} Bomba;
-
-typedef struct {
-    Bomba *bombas;
-    int quantidadeBombas;
-} Kit;
-
-void imprimirConfiguracao(Kit *kit) {
-    printf("Configuração do Kit:\n");
-    for (int i = 0; i < kit->quantidadeBombas; i++) {
-        Bomba bomba = kit->bombas[i];
-        printf("Bomba %d: P1(%d, %d) P2(%d, %d) Comprimento: %d Cor: %s\n", 
-               i + 1, bomba.xInicial, bomba.yInicial, bomba.xFinal, bomba.yFinal, bomba.comprimento, bomba.cor);
+Kit *criarKit(){
+    Kit *k;
+    k = (Kit*) malloc (sizeof(Kit));
+    if(k != NULL){
+        *k = NULL;
     }
+    return k;
 }
 
+int kitVazio (Kit *k){
+    if(k == NULL ) 
+        return -1;
+    if (*k == NULL )
+        return 1;
+    return 0; 
+}
+
+NO* alocarNO () {
+return (NO *) malloc ( sizeof (NO));
+}
+
+void liberarNO (NO* q){
+free (q);
+}
+
+int insereBomba(Kit *k, Bomba bomba){
+    if(k==NULL) return 0;
+    NO* novo = alocarNO();
+    if(novo = NULL) return 0;
+    novo->bomba = bomba;
+    novo->prox = *k;
+    *k = novo;
+    return 1;
+}
+
+void liberaKit(Kit *k){
+    if(k != NULL){
+        NO *aux;
+        while((*k)!=NULL){
+            aux = *k;
+            *k = (*k)->prox;
+            liberarNO(aux);
+        }
+        free(k);
+    }
+}
 
 Kit* leituraConfiguracao(char* fileConfiguracao){
     FILE *arquivo = fopen(fileConfiguracao, "r");
@@ -30,19 +57,90 @@ Kit* leituraConfiguracao(char* fileConfiguracao){
         return NULL;
     }
 
-    Kit *kit = malloc(sizeof(Kit));
-    kit->bombas = malloc(sizeof(Bomba) * 36);  // assumimos no máximo 18 barras para simplificar
-    kit->quantidadeBombas = 0;
+    Kit *kit = criarKit();
 
     while (!feof(arquivo)) {
         Bomba bomba;
         fscanf(arquivo, "%d %d %d %d %d%s", &bomba.xInicial, &bomba.yInicial,
                &bomba.xFinal, &bomba.yFinal,&bomba.comprimento,bomba.cor);
-        kit->bombas[kit->quantidadeBombas++] = bomba;
+        insereBomba(kit, bomba);
     }
 
-    imprimirConfiguracao(kit);
+    fclose(arquivo);
+    return kit;
+}
 
+int **alocarMatriz(int linhas, int colunas) {
+    int **matriz = (int **)malloc(linhas * sizeof(int *));
+    
+    if (matriz == NULL) {
+        return 0;
+    }
+    for (int i = 0; i < linhas; i++) {
+        matriz[i] = (int *)malloc(colunas * sizeof(int));
+        if (matriz[i] == NULL) {
+            return 0;
+        }
+    }
+
+    return matriz;
+}
+
+void liberarMatriz(int **matriz, int linhas) {
+    for (int i = 0; i < linhas; i++) {
+        free(matriz[i]);
+    }
+    free(matriz);
+}
+
+void montarCaixa(Kit *kit,int linhas, int colunas) {
+    int **caixa = alocarMatriz(linhas, colunas);
+    
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            caixa[i][j] = 0;
+        }
+    }
+
+    NO *bombaAtual = *kit;
+    while(bombaAtual != NULL){
+        Bomba b = bombaAtual->bomba;
+
+        for(int i=b.xInicial-1; i<b.xFinal;i++){
+            for(int j=b.yInicial-1; j<b.yFinal;j++){
+                
+            }
+        }
+    }
+
+    liberarNO(bombaAtual);
+    
+}
+
+void imprimirMatriz(int **matriz, int linhas, int colunas) {
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int linhas = 6;
+    int colunas = 6;
+
+    // Alocar matriz
+    int **matriz = alocarMatriz(linhas, colunas);
+
+    // Preencher e imprimir a matriz
+    preencherMatriz(matriz, linhas, colunas);
+    imprimirMatriz(matriz, linhas, colunas);
+
+    // Liberar memória alocada
+    liberarMatriz(matriz, linhas);
+
+    return 0;
 }
 
 int main(int argc, char *argv[]) {
