@@ -1,0 +1,9 @@
+2 3Az
+2 2Az
+3 1Az
+2 2Vm
+2 1Vm
+2 3Am
+1 1Am
+2 2Vd
+2 3Vd
