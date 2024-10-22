@@ -1,5 +1,5 @@
-#ifndef KIT_H
-#define KIT_H
+#ifndef KITBOOM_H
+#define KITBOOM_H
 
 typedef struct {
     int xInicial, yInicial, xFinal, yFinal;
@@ -14,7 +14,18 @@ typedef struct NO{
 
 typedef struct NO* Kit;
 
-
+Kit *criarKit();
+int kitVazio(Kit *k);
+NO* alocarNO();
+void liberarNO(NO *q);
+int insereBomba(Kit *k, Bomba bomba);
+void liberaKit(Kit *k);
+Kit* leituraConfiguracao(char *fileConfiguracao);
+int converteCorParaNumero(char *cor);
+int **alocarMatriz(int linhas, int colunas);
+void liberarMatriz(int **matriz, int linhas);
+void montarCaixa(Kit *kit, int linhas, int colunas);
+void imprimirMatriz(int **matriz, int linhas, int colunas);
 
 
 #endif
