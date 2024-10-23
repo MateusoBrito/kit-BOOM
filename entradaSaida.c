@@ -69,12 +69,15 @@ Kit* leituraConfiguracao(char* fileConfiguracao){
     }
 
     Kit *kit = criarKit();
-    Bomba bomba;
+    Bomba bomba; //liberar este espaco de memoria?
 
+    int i=1;
     while (!feof(arquivo)) {
         fscanf(arquivo, "%d %d %d %d %d%s", &bomba.xInicial, &bomba.yInicial,
                &bomba.xFinal, &bomba.yFinal,&bomba.comprimento,bomba.cor);
+        bomba.nome = i;
         insereBomba(kit, bomba);
+        i++;
     }
 
     fclose(arquivo);
@@ -109,42 +112,15 @@ Composicao *leituraComposicao(char *fileComposicao, int *numBombas){
     return composicao;
 }
 
-int comparaComposicaoConfiguracao(Kit *kit, Composicao *composicao, int numBombas){
-    NO *bombaAtual = *kit;
-    while(bombaAtual != NULL) {
-        Bomba b = bombaAtual->bomba;
+Par **alocarMatriz(int linhas, int colunas) {
+    Par **matriz = (Par **)malloc(linhas * sizeof(Par *));
 
-        for(int i=0; i<numBombas; i++){
-            if(strcmp(b.cor, composicao[i].cor) == 0 && b.comprimento == composicao[i].comprimento){
-                composicao[i].quantidade--;
-                if(composicao[i]. quantidade < 0){
-                    printf("Existe bomba %d%s a mais!\n", composicao[i].cor, composicao[i].comprimento);
-                    return 0;
-                }
-            }
-        }
-        bombaAtual = bombaAtual->prox;
-    }
-
-    for(int i=0; i<numBombas; i++){ //verifica se tem bomba faltando
-        if(composicao[i].quantidade > 0){
-            printf("Falta bomba %d%s!\n", composicao[i].cor, composicao[i].comprimento);
-                    return 0;
-        }
-    }
-
-    return 1;
-}
-
-Bomba ***alocarMatriz(int linhas, int colunas) {
-    Bomba ***matriz = (Bomba ***)malloc(linhas * sizeof(Bomba **));
-    
     if (matriz == NULL) {
         printf("Erro ao alocar memória para as linhas da matriz.\n");
         return 0;
     }
     for (int i = 0; i < linhas; i++) {
-        matriz[i] = (Bomba **)malloc(colunas * sizeof(Bomba *));
+        matriz[i] = (Par *)malloc((2*colunas) * sizeof(Par));
         if (matriz[i] == NULL) {
             printf("Erro ao alocar memória para a coluna %d.\n", i);
             return 0;
@@ -160,9 +136,9 @@ void liberarMatriz(int **matriz, int linhas) {
     }
     free(matriz);
 }
-/*
-int** montarCaixa(Kit *kit,int linhas, int colunas) {
-    int **caixa = alocarMatriz(linhas, colunas);
+
+Par** montarCaixa(Kit *kit,int linhas, int colunas) {
+    Par **caixa = alocarMatriz(linhas, colunas);
     if(caixa == NULL){
         printf("Erro ao alocar a matriz caixa.\n");
         return NULL;
@@ -170,7 +146,8 @@ int** montarCaixa(Kit *kit,int linhas, int colunas) {
     
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
-            caixa[i][j] = 0;
+            caixa[i][j].cor = 0;
+            caixa[i][j].nome = 0;
         }
     }
 
@@ -182,8 +159,8 @@ int** montarCaixa(Kit *kit,int linhas, int colunas) {
         for(int i=b.xInicial-1; i<b.xFinal;i++){
             for(int j=b.yInicial-1; j<b.yFinal;j++){
                 if(i >= 0 && i < linhas && j >= 0 && j < colunas){
-                    //caixa[i][j] = corNumero;
-
+                    caixa[i][j].cor = corNumero;
+                    caixa[i][j].nome = b.nome;
                 }
             }
         }
@@ -193,8 +170,8 @@ int** montarCaixa(Kit *kit,int linhas, int colunas) {
     liberarNO(bombaAtual);
     return caixa;
 }
-*/
 
+/*
 Bomba*** montarCaixa2(Kit *kit,int linhas, int colunas) {
     Bomba ***caixa = alocarMatriz(linhas, colunas);
     if(caixa == NULL){
@@ -226,15 +203,14 @@ Bomba*** montarCaixa2(Kit *kit,int linhas, int colunas) {
     liberarNO(bombaAtual);
     return caixa;
 }
+*/
 
-void imprimirMatriz(Bomba ***matriz, int linhas, int colunas) {
+void imprimirMatriz(Par **matriz, int linhas, int colunas) {
+    printf("Caixa de Bombas:\n");
+    printf("(nome,cor)\n");
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
-            if (matriz[i][j] != NULL) {
-                printf("%s ", matriz[i][j]->cor); 
-            } else {
-                printf("NULL ");
-            }
+            printf("(%d,%d) ", matriz[i][j].nome, matriz[i][j].cor); 
         }
         printf("\n");
     }

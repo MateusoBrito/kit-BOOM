@@ -6,33 +6,57 @@
 
 
 //mudar nome da funcao
-void validacaoAdjascente(Bomba ***caixa, int linhas, int colunas){
+void validarAdjascencia(Par **caixa, int linhas, int colunas){
     for(int i=0; i<linhas;i++){
         for(int j=0; j<colunas;j++){
-            //if(caixa[i-1][j] != caixa[i][j] && i-1>=0){
-            //    if(!strcmp(caixa[i-1][j]->cor,caixa[i][j]->cor)){
-            //        printf("Existem bombas adjascentes! (%d,%d) (%d,%d)\n",i-1,j,i,j);
-            //    }
-            //}
-            printf("(%d,%d) (%d,%d)\n",i,j+1,i,j);
-            if(caixa[i][j+1] != caixa[i][j]){
-                if(!strcmp(caixa[i][j+1]->cor,caixa[i][j]->cor)){
-                    printf("(%d,%d) (%d,%d)\n",i,j+1,i,j);
-                    return;
+            if(i-1 >= 0 && caixa[i-1][j].nome != caixa[i][j].nome){
+                if(caixa[i-1][j].cor == caixa[i][j].cor ){
+                    printf("Bomba %d e Bomba %d estao adjascente e sao de mesma cor!\n",caixa[i-1][j].nome,caixa[i][j].nome);
                 }
             }
-            if(caixa[i+1][j] != caixa[i][j]){
-                if(!strcmp(caixa[i+1][j]->cor,caixa[i][j]->cor)){
-                    printf("Existem bombas adjascentes! (%d,%d) (%d,%d)\n",i-1,j,i,j);
+            if(j+1 < colunas && caixa[i][j+1].nome != caixa[i][j].nome){
+                if(caixa[i][j+1].cor == caixa[i][j].cor ){
+                    printf("Bomba %d e Bomba %d estao adjascente e sao de mesma cor!\n",caixa[i][j+1].nome,caixa[i][j].nome);
                 }
             }
-            if(caixa[i][j-1] != caixa[i][j] && j-1>=0){
-                if(!strcmp(caixa[i][j-1]->cor,caixa[i][j]->cor)){
-                    printf("Existem bombas adjascentes! (%d,%d) (%d,%d)\n",i-1,j,i,j);
+            if(i+1 < linhas && caixa[i+1][j].nome != caixa[i][j].nome){
+                if(caixa[i+1][j].cor == caixa[i][j].cor ){
+                    printf("Bomba %d e Bomba %d estao adjascente e sao de mesma cor!\n",caixa[i+1][j].nome,caixa[i][j].nome);
+                }
+            }
+            if(j-1 >= 0 && caixa[i][j-1].nome != caixa[i][j].nome && j-1>=0){
+                if(caixa[i][j-1].cor == caixa[i][j].cor ){
+                    printf("Bomba %d e Bomba %d estao adjascente e sao de mesma cor!\n",caixa[i][j-1].nome,caixa[i][j].nome);
                 }
             }
         }
     }
-    printf("Nenhuma bomba adjacente com cor igual encontrada.\n");
     return;
+}
+
+int verificarComposicao(Kit *kit, Composicao *composicao, int numBombas){
+    NO *bombaAtual = *kit;
+    while(bombaAtual != NULL) {
+        Bomba b = bombaAtual->bomba;
+
+        for(int i=0; i<numBombas; i++){
+            if(strcmp(b.cor, composicao[i].cor) == 0 && b.comprimento == composicao[i].comprimento){
+                composicao[i].quantidade--;
+                if(composicao[i]. quantidade < 0){
+                    printf("Existe bomba %d%s a mais!\n", composicao[i].cor, composicao[i].comprimento);
+                    return 0;
+                }
+            }
+        }
+        bombaAtual = bombaAtual->prox;
+    }
+
+    for(int i=0; i<numBombas; i++){ //verifica se tem bomba faltando
+        if(composicao[i].quantidade > 0){
+            printf("Falta bomba %d%s!\n", composicao[i].cor, composicao[i].comprimento);
+                    return 0;
+        }
+    }
+
+    return 1;
 }

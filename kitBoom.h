@@ -2,6 +2,7 @@
 #define KITBOOM_H
 
 typedef struct {
+    int nome;
     int xInicial, yInicial, xFinal, yFinal;
     int comprimento;
     char cor[3];
@@ -13,6 +14,11 @@ typedef struct NO{
 } NO;
 
 typedef struct NO* Kit;
+
+typedef struct Par{
+    int cor;
+    int nome;
+} Par;
 
 typedef struct {
     int quantidade;
@@ -28,15 +34,12 @@ int insereBomba(Kit *k, Bomba bomba);
 void liberaKit(Kit *k);
 Kit* leituraConfiguracao(char *fileConfiguracao);
 int converteCorParaNumero(char *cor);
-//int **alocarMatriz(int linhas, int colunas);
+Par **alocarMatriz(int linhas, int colunas);
 void liberarMatriz(int **matriz, int linhas);
-int **montarCaixa(Kit *kit, int linhas, int colunas);
-//void imprimirMatriz(int **matriz, int linhas, int colunas);
-Bomba*** montarCaixa2(Kit *kit,int linhas, int colunas);
-Bomba ***alocarMatriz(int linhas, int colunas);
-void imprimirMatriz(Bomba ***matriz, int linhas, int colunas);
-void validacaoAdjascente(Bomba ***caixa, int linhas, int colunas);
+Par **montarCaixa(Kit *kit, int linhas, int colunas);
+void imprimirMatriz(Par **matriz, int linhas, int colunas);
+void validarAdjascencia(Par **caixa, int linhas, int colunas);
 Composicao* leituraComposicao(char* fileComposicao, int *numBombas);
-int comparaComposicaoConfiguracao(Kit *kit, Composicao *composicao, int numBombas);
+int verificarComposicao(Kit *kit, Composicao *composicao, int numBombas);
 
 #endif

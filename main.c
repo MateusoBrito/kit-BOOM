@@ -55,12 +55,10 @@ int main(int argc, char *argv[]) {
 
     free(composicao);
 
-    Bomba ***caixa = montarCaixa2(kit, linhas, colunas);
+    Par **caixa = montarCaixa(kit, linhas, colunas);
 
-    printf("Caixa de Bombas:\n");
     imprimirMatriz(caixa, linhas, colunas);
-
-    //validacaoAdjascente(caixa,linhas,colunas);
+    validarAdjascencia(caixa,linhas,colunas);
 
     //liberarMatriz(caixa, linhas);
     liberaKit(kit);
