@@ -36,13 +36,31 @@ int main(int argc, char *argv[]) {
 
 
     Kit *kit = leituraConfiguracao(fileConfiguracao);
+
+    int numBombas;
+    Composicao *composicao = leituraComposicao(fileComposicao, &numBombas);
+
+    if(composicao == NULL) {
+        printf("Erro na leitura da composição!\n");
+        return 0;
+    }
+
+    if(!comparaComposicaoConfiguracao(kit, composicao, numBombas)){
+        printf("Composicao inválida!\n");
+    }else{
+        printf("Composicao valida!\n");
+    }
+
+    printf("teste\n");
+
+    free(composicao);
+
     Bomba ***caixa = montarCaixa2(kit, linhas, colunas);
-    
 
     printf("Caixa de Bombas:\n");
     imprimirMatriz(caixa, linhas, colunas);
 
-    validacaoAdjascente(caixa,linhas,colunas);
+    //validacaoAdjascente(caixa,linhas,colunas);
 
     //liberarMatriz(caixa, linhas);
     liberaKit(kit);

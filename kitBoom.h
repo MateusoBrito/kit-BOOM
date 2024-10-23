@@ -14,6 +14,12 @@ typedef struct NO{
 
 typedef struct NO* Kit;
 
+typedef struct {
+    int quantidade;
+    int comprimento;
+    char cor[3];
+} Composicao;
+
 Kit *criarKit();
 int kitVazio(Kit *k);
 NO* alocarNO();
@@ -30,5 +36,7 @@ Bomba*** montarCaixa2(Kit *kit,int linhas, int colunas);
 Bomba ***alocarMatriz(int linhas, int colunas);
 void imprimirMatriz(Bomba ***matriz, int linhas, int colunas);
 void validacaoAdjascente(Bomba ***caixa, int linhas, int colunas);
+Composicao* leituraComposicao(char* fileComposicao, int *numBombas);
+int comparaComposicaoConfiguracao(Kit *kit, Composicao *composicao, int numBombas);
 
 #endif

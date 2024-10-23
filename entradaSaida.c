@@ -64,7 +64,7 @@ void liberaKit(Kit *k){
 Kit* leituraConfiguracao(char* fileConfiguracao){
     FILE *arquivo = fopen(fileConfiguracao, "r");
     if (!arquivo) {
-        printf("Erro ao abrir o arquivo de configuração\n");
+        printf("Erro ao abrir o arquivo de configuracao\n");
         return NULL;
     }
 
@@ -79,6 +79,61 @@ Kit* leituraConfiguracao(char* fileConfiguracao){
 
     fclose(arquivo);
     return kit;
+}
+
+Composicao *leituraComposicao(char *fileComposicao, int *numBombas){
+    FILE *arquivo = fopen(fileComposicao, "r");
+    if(!arquivo){
+        printf("Erro ao abrir o arquivo de composicao\n");
+        return NULL;
+    }
+
+    Composicao *composicao = malloc(sizeof(Composicao)*36);
+    *numBombas = 0;
+
+    while(!feof(arquivo)){
+        fscanf(arquivo, "%d %d%s", &composicao[*numBombas].quantidade, 
+                &composicao[*numBombas].comprimento, composicao[*numBombas].cor);
+        (*numBombas)++;
+    }
+
+    fclose(arquivo);
+
+    printf("Composicao lida:\n");
+    for (int i = 0; i < *numBombas; i++) {
+        printf("Bomba %d: Comprimento = %d, Quantidade = %d, Cor = %s\n",
+               i + 1, composicao[i].comprimento, 
+               composicao[i].quantidade, composicao[i].cor);
+    }
+
+    return composicao;
+}
+
+int comparaComposicaoConfiguracao(Kit *kit, Composicao *composicao, int numBombas){
+    NO *bombaAtual = *kit;
+    while(bombaAtual != NULL) {
+        Bomba b = bombaAtual->bomba;
+
+        for(int i=0; i<numBombas; i++){
+            if(strcmp(b.cor, composicao[i].cor) == 0 && b.comprimento == composicao[i].comprimento){
+                composicao[i].quantidade--;
+                if(composicao[i]. quantidade < 0){
+                    printf("Existe bomba %d%s a mais!\n", composicao[i].cor, composicao[i].comprimento);
+                    return 0;
+                }
+            }
+        }
+        bombaAtual = bombaAtual->prox;
+    }
+
+    for(int i=0; i<numBombas; i++){ //verifica se tem bomba faltando
+        if(composicao[i].quantidade > 0){
+            printf("Falta bomba %d%s!\n", composicao[i].cor, composicao[i].comprimento);
+                    return 0;
+        }
+    }
+
+    return 1;
 }
 
 Bomba ***alocarMatriz(int linhas, int colunas) {
