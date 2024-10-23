@@ -22,10 +22,13 @@ int insereBomba(Kit *k, Bomba bomba);
 void liberaKit(Kit *k);
 Kit* leituraConfiguracao(char *fileConfiguracao);
 int converteCorParaNumero(char *cor);
-int **alocarMatriz(int linhas, int colunas);
+//int **alocarMatriz(int linhas, int colunas);
 void liberarMatriz(int **matriz, int linhas);
-void montarCaixa(Kit *kit, int linhas, int colunas);
-void imprimirMatriz(int **matriz, int linhas, int colunas);
-
+int **montarCaixa(Kit *kit, int linhas, int colunas);
+//void imprimirMatriz(int **matriz, int linhas, int colunas);
+Bomba*** montarCaixa2(Kit *kit,int linhas, int colunas);
+Bomba ***alocarMatriz(int linhas, int colunas);
+void imprimirMatriz(Bomba ***matriz, int linhas, int colunas);
+void validacaoAdjascente(Bomba ***caixa, int linhas, int colunas);
 
 #endif

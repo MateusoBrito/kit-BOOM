@@ -81,15 +81,15 @@ Kit* leituraConfiguracao(char* fileConfiguracao){
     return kit;
 }
 
-int **alocarMatriz(int linhas, int colunas) {
-    int **matriz = (int **)malloc(linhas * sizeof(int *));
+Bomba ***alocarMatriz(int linhas, int colunas) {
+    Bomba ***matriz = (Bomba ***)malloc(linhas * sizeof(Bomba **));
     
     if (matriz == NULL) {
         printf("Erro ao alocar memória para as linhas da matriz.\n");
         return 0;
     }
     for (int i = 0; i < linhas; i++) {
-        matriz[i] = (int *)malloc(colunas * sizeof(int));
+        matriz[i] = (Bomba **)malloc(colunas * sizeof(Bomba *));
         if (matriz[i] == NULL) {
             printf("Erro ao alocar memória para a coluna %d.\n", i);
             return 0;
@@ -105,12 +105,12 @@ void liberarMatriz(int **matriz, int linhas) {
     }
     free(matriz);
 }
-
-void montarCaixa(Kit *kit,int linhas, int colunas) {
+/*
+int** montarCaixa(Kit *kit,int linhas, int colunas) {
     int **caixa = alocarMatriz(linhas, colunas);
     if(caixa == NULL){
         printf("Erro ao alocar a matriz caixa.\n");
-        return;
+        return NULL;
     }
     
     for (int i = 0; i < linhas; i++) {
@@ -127,7 +127,8 @@ void montarCaixa(Kit *kit,int linhas, int colunas) {
         for(int i=b.xInicial-1; i<b.xFinal;i++){
             for(int j=b.yInicial-1; j<b.yFinal;j++){
                 if(i >= 0 && i < linhas && j >= 0 && j < colunas){
-                    caixa[i][j] = corNumero;
+                    //caixa[i][j] = corNumero;
+
                 }
             }
         }
@@ -135,13 +136,50 @@ void montarCaixa(Kit *kit,int linhas, int colunas) {
     }
 
     liberarNO(bombaAtual);
-    
+    return caixa;
 }
+*/
 
-void imprimirMatriz(int **matriz, int linhas, int colunas) {
+Bomba*** montarCaixa2(Kit *kit,int linhas, int colunas) {
+    Bomba ***caixa = alocarMatriz(linhas, colunas);
+    if(caixa == NULL){
+        printf("Erro ao alocar a matriz caixa.\n");
+        return NULL;
+    }
+    
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
-            printf("%d ", matriz[i][j]);
+            caixa[i][j] = NULL;
+        }
+    }
+
+    NO *bombaAtual = *kit;
+    while(bombaAtual != NULL){
+        Bomba *b = &(bombaAtual->bomba);
+
+        for(int i=b->xInicial-1; i<b->xFinal;i++){
+            for(int j=b->yInicial-1; j<b->yFinal;j++){
+                if(i >= 0 && i < linhas && j >= 0 && j < colunas){
+                    caixa[i][j] = b;
+
+                }
+            }
+        }
+        bombaAtual = bombaAtual -> prox;
+    }
+
+    liberarNO(bombaAtual);
+    return caixa;
+}
+
+void imprimirMatriz(Bomba ***matriz, int linhas, int colunas) {
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            if (matriz[i][j] != NULL) {
+                printf("%s ", matriz[i][j]->cor); 
+            } else {
+                printf("NULL ");
+            }
         }
         printf("\n");
     }

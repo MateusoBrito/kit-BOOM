@@ -36,13 +36,15 @@ int main(int argc, char *argv[]) {
 
 
     Kit *kit = leituraConfiguracao(fileConfiguracao);
-    int **matriz = alocarMatriz(linhas, colunas);
-    montarCaixa(kit, linhas, colunas);
+    Bomba ***caixa = montarCaixa2(kit, linhas, colunas);
+    
 
     printf("Caixa de Bombas:\n");
-    imprimirMatriz(matriz, linhas, colunas);
+    imprimirMatriz(caixa, linhas, colunas);
 
-    liberarMatriz(matriz, linhas);
+    validacaoAdjascente(caixa,linhas,colunas);
+
+    //liberarMatriz(caixa, linhas);
     liberaKit(kit);
 
 
