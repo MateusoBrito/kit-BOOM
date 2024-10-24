@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    if(!comparaComposicaoConfiguracao(kit, composicao, numBombas)){
+    if(!verificarComposicao(kit, composicao, numBombas)){
         printf("Composicao inválida!\n");
     }else{
         printf("Composicao valida!\n");
