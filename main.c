@@ -41,24 +41,22 @@ int main(int argc, char *argv[]) {
     Composicao *composicao = leituraComposicao(fileComposicao, &numBombas);
 
     if(composicao == NULL) {
-        printf("Erro na leitura da composição!\n");
+        printf("Erro na leitura da composicao!\n");
         return 0;
     }
 
     if(!verificarComposicao(kit, composicao, numBombas)){
-        printf("Composicao inválida!\n");
+        printf("Composicao invalida!\n");
     }else{
         printf("Composicao valida!\n");
     }
-
-    printf("teste\n");
 
     free(composicao);
 
     Par **caixa = montarCaixa(kit, linhas, colunas);
 
     imprimirMatriz(caixa, linhas, colunas);
-    validarAdjascencia(caixa,linhas,colunas);
+    validarAdjacencia(caixa,linhas,colunas);
 
     //liberarMatriz(caixa, linhas);
     liberaKit(kit);

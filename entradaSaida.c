@@ -93,21 +93,32 @@ Composicao *leituraComposicao(char *fileComposicao, int *numBombas){
 
     Composicao *composicao = malloc(sizeof(Composicao)*36);
     *numBombas = 0;
+    int completeza = 0;
 
     while(!feof(arquivo)){
         fscanf(arquivo, "%d %d%s", &composicao[*numBombas].quantidade, 
                 &composicao[*numBombas].comprimento, composicao[*numBombas].cor);
+        completeza += (composicao[*numBombas].quantidade * composicao[*numBombas].comprimento);
         (*numBombas)++;
     }
 
     fclose(arquivo);
+    
+    if(completeza < 36){
+        printf("Erro na completeza do kit: ha espacos nao preenchidos na caixa.\n");
+        return 0;
+    }else if(completeza > 36){
+        //VOLTAR: BOMBAS SOBREPOSTAS OU VAZANDO DA CAIXA
+    }
 
+    /*
     printf("Composicao lida:\n");
     for (int i = 0; i < *numBombas; i++) {
         printf("Bomba %d: Comprimento = %d, Quantidade = %d, Cor = %s\n",
                i + 1, composicao[i].comprimento, 
                composicao[i].quantidade, composicao[i].cor);
     }
+    */
 
     return composicao;
 }
