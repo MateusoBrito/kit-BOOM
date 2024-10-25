@@ -69,3 +69,43 @@ int verificarComposicao(Kit *kit, Composicao *composicao, int numBombas){
 
     return 1;
 }
+
+int verificarSobreposicao(Kit *kit){
+    NO *aux = *kit;
+
+    while(aux != NULL){
+        NO *aux2 = aux->prox;
+
+        while(aux2 != NULL){
+            if (!(aux->bomba.xFinal < aux2->bomba.xInicial ||
+                aux2->bomba.xFinal < aux->bomba.xInicial ||
+                aux->bomba.yFinal < aux2->bomba.yInicial ||
+                aux2->bomba.yFinal < aux->bomba.yInicial)){
+                    printf("BOOM! Sobreposicao detectada: %d%s e %d%s\n", 
+                            aux->bomba.comprimento, aux->bomba.cor, 
+                            aux2->bomba.comprimento, aux2->bomba.cor);
+                }
+            aux2 = aux2->prox;
+        }
+        aux = aux->prox;
+    }
+    return 1;
+}
+
+int validarCoordenadas(Kit *kit, int linhas, int colunas){
+    NO *aux = *kit;
+    
+    while(aux != NULL){
+        Bomba b = aux->bomba;
+
+        if (b.xInicial < 1 || b.xInicial > colunas ||
+            b.yInicial < 1 || b.yInicial > colunas ||
+            b.xFinal < 1 || b.xFinal > colunas || 
+            b. yFinal< 1 || b.yFinal > colunas){
+                printf("BOOM! Seu kit nao cabe corretamente na caixa. A bomba %d%s ultrapassa os limites!\n", b.comprimento, b.cor);
+                return 0;
+        }
+        aux = aux->prox;
+    }
+    return 1;
+}

@@ -4,6 +4,10 @@
 #include "kitBoom.h"
 
 int main(int argc, char *argv[]) {
+
+    printf("\n===== EXPLOSIVOS JEPSLON =====\n");
+    printf("          Kit BOOM!     \n\n");
+
     int opt;
     char *fileComposicao = NULL;
     char *fileConfiguracao = NULL;
@@ -46,16 +50,23 @@ int main(int argc, char *argv[]) {
     }
 
     if(!verificarComposicao(kit, composicao, numBombas)){
-        printf("Composicao invalida!\n");
+        //printf("Composicao invalida!\n");
     }else{
-        printf("Composicao valida!\n");
+        //printf("Composicao valida!\n");
     }
 
     free(composicao);
 
     Par **caixa = montarCaixa(kit, linhas, colunas);
 
-    imprimirMatriz(caixa, linhas, colunas);
+    if(!verificarSobreposicao(kit)){
+        return 0;
+    }
+
+    if(!validarCoordenadas(kit, linhas, colunas)){
+        return 0;
+    }
+    //imprimirMatriz(caixa, linhas, colunas);
     validarAdjacencia(caixa,linhas,colunas);
 
     //liberarMatriz(caixa, linhas);

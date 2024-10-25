@@ -41,5 +41,7 @@ void imprimirMatriz(Par **matriz, int linhas, int colunas);
 void validarAdjacencia(Par **caixa, int linhas, int colunas);
 Composicao* leituraComposicao(char* fileComposicao, int *numBombas);
 int verificarComposicao(Kit *kit, Composicao *composicao, int numBombas);
+int verificarSobreposicao(Kit *kit);
+int validarCoordenadas(Kit *kit, int linhas, int colunas);
 
 #endif
