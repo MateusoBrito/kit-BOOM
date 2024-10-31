@@ -50,28 +50,23 @@ int main(int argc, char *argv[]) {
     }
 
     if(!verificarComposicao(kit, composicao, numBombas)){
-        //printf("Composicao invalida!\n");
-    }else{
-        //printf("Composicao valida!\n");
+        return 0;
     }
 
-    free(composicao);
+    free(composicao); 
 
     Par **caixa = montarCaixa(kit, linhas, colunas);
+    imprimirCaixa(caixa,linhas,colunas);
 
-    if(!verificarSobreposicao(kit)){
+    if(!verificarSobreposicao(kit) || !validarCoordenadas(kit, linhas, colunas) || !validarAdjacencia(caixa,linhas,colunas)){
+        saidaInvalido();
         return 0;
     }
 
-    if(!validarCoordenadas(kit, linhas, colunas)){
-        return 0;
-    }
-    //imprimirMatriz(caixa, linhas, colunas);
-    validarAdjacencia(caixa,linhas,colunas);
-
-    //liberarMatriz(caixa, linhas);
     liberaKit(kit);
+    liberarCaixa(caixa,linhas);
 
+    exibirTempos();
 
     return 0;
 }

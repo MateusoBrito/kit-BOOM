@@ -3,35 +3,180 @@
 #include <string.h>
 #include "kitBoom.h"
 
+Kit *criarKit(){
+    Kit *k;
+    k = (Kit*) malloc (sizeof(Kit));
+    if(k != NULL){
+        *k = NULL;
+    }
+    return k;
+}
 
+int kitVazio (Kit *k){
+    if(k == NULL ) 
+        return -1;
+    if (*k == NULL )
+        return 1;
+    return 0; 
+}
+
+NO* alocarNO () {
+return (NO *) malloc ( sizeof (NO));
+}
+
+void liberarNO (NO* q){
+free (q);
+}
+
+int insereBomba(Kit *k, Bomba bomba){
+    if(k==NULL) return 0;
+    NO* novo = alocarNO();
+    if(novo == NULL) {
+        printf("Erro ao alocaro nó!\n");
+        return 0;
+    }
+    novo->bomba = bomba;
+    novo->prox = *k;
+    *k = novo;
+    return 1;
+}
+
+void liberaKit(Kit *k){
+    if(k != NULL){
+        NO *aux;
+        while((*k)!=NULL){
+            aux = *k;
+            *k = (*k)->prox;
+            liberarNO(aux);
+        }
+        free(k);
+    }
+}
+
+
+Par **alocarCaixa(int linhas, int colunas) {
+    Par **matriz = (Par **)malloc(linhas * sizeof(Par *));
+
+    if (matriz == NULL) {
+        printf("Erro ao alocar memória para as linhas da matriz.\n");
+        return 0;
+    }
+    for (int i = 0; i < linhas; i++) {
+        matriz[i] = (Par *)malloc((2*colunas) * sizeof(Par));
+        if (matriz[i] == NULL) {
+            printf("Erro ao alocar memória para a coluna %d.\n", i);
+            return 0;
+        }
+    }
+
+    return matriz;
+}
+
+void liberarCaixa(Par **matriz, int linhas) {
+    for (int i = 0; i < linhas; i++) {
+        free(matriz[i]);
+    }
+    free(matriz);
+}
+
+Par** montarCaixa(Kit *kit,int linhas, int colunas) {
+    Par **caixa = alocarCaixa(linhas, colunas);
+    if(caixa == NULL){
+        printf("Erro ao alocar a matriz caixa.\n");
+        return NULL;
+    }
+    
+    //for (int i = 0; i < linhas; i++) {
+    //    for (int j = 0; j < colunas; j++) { 
+    //        strcpy(caixa[i][j].cor, NULL);
+    //        caixa[i][j].nome = 0;
+    //    }
+    //}
+
+    NO *bombaAtual = *kit;
+    while(bombaAtual != NULL){
+        Bomba b = bombaAtual->bomba;
+
+        for(int i=b.xInicial-1; i<b.xFinal;i++){
+            for(int j=b.yInicial-1; j<b.yFinal;j++){
+                if(i >= 0 && i < linhas && j >= 0 && j < colunas){
+                    strcpy(caixa[i][j].cor, b.cor);
+                    caixa[i][j].nome = b.nome;
+                }
+            }
+        }
+        bombaAtual = bombaAtual -> prox;
+    }
+
+    liberarNO(bombaAtual);
+    return caixa;
+}
+
+/*
+Bomba*** montarCaixa2(Kit *kit,int linhas, int colunas) {
+    Bomba ***caixa = alocarMatriz(linhas, colunas);
+    if(caixa == NULL){
+        printf("Erro ao alocar a matriz caixa.\n");
+        return NULL;
+    }
+    
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            caixa[i][j] = NULL;
+        }
+    }
+
+    NO *bombaAtual = *kit;
+    while(bombaAtual != NULL){
+        Bomba *b = &(bombaAtual->bomba);
+
+        for(int i=b->xInicial-1; i<b->xFinal;i++){
+            for(int j=b->yInicial-1; j<b->yFinal;j++){
+                if(i >= 0 && i < linhas && j >= 0 && j < colunas){
+                    caixa[i][j] = b;
+
+                }
+            }
+        }
+        bombaAtual = bombaAtual -> prox;
+    }
+
+    liberarNO(bombaAtual);
+    return caixa;
+}
+*/
 
 //mudar nome da funcao
-void validarAdjacencia(Par **caixa, int linhas, int colunas){
+int validarAdjacencia(Par **caixa, int linhas, int colunas){
     for(int i=0; i<linhas;i++){
         for(int j=0; j<colunas;j++){
             if(i-1 >= 0 && caixa[i-1][j].nome != caixa[i][j].nome){
-                if(caixa[i-1][j].cor == caixa[i][j].cor ){
+                if(strcmp(caixa[i-1][j].cor,caixa[i][j].cor)==0){
                     printf("Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i-1][j].nome,caixa[i][j].nome);
+                    return 0;
                 }
             }
             if(j+1 < colunas && caixa[i][j+1].nome != caixa[i][j].nome){
-                if(caixa[i][j+1].cor == caixa[i][j].cor ){
+                if(strcmp(caixa[i][j+1].cor,caixa[i][j].cor)==0){
                     printf("Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i][j+1].nome,caixa[i][j].nome);
+                    return 0;
                 }
             }
             if(i+1 < linhas && caixa[i+1][j].nome != caixa[i][j].nome){
-                if(caixa[i+1][j].cor == caixa[i][j].cor ){
+                if(strcmp(caixa[i+1][j].cor, caixa[i][j].cor)==0){
                     printf("Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i+1][j].nome,caixa[i][j].nome);
+                    return 0;
                 }
             }
             if(j-1 >= 0 && caixa[i][j-1].nome != caixa[i][j].nome && j-1>=0){
-                if(caixa[i][j-1].cor == caixa[i][j].cor ){
+                if(strcmp(caixa[i][j-1].cor, caixa[i][j].cor)==0){
                     printf("Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i][j-1].nome,caixa[i][j].nome);
+                    return 0;
                 }
             }
         }
     }
-    return;
+    return 1;
 }
 
 int verificarComposicao(Kit *kit, Composicao *composicao, int numBombas){
@@ -59,7 +204,7 @@ int verificarComposicao(Kit *kit, Composicao *composicao, int numBombas){
 
         bombaAtual = bombaAtual->prox;
     }
-
+    
     for(int i=0; i<numBombas; i++){ //verifica se tem bomba faltando
         if(composicao[i].quantidade > 0){
             printf("Falta bomba %d%s!\n", composicao[i].comprimento, composicao[i].cor);
@@ -84,6 +229,7 @@ int verificarSobreposicao(Kit *kit){
                     printf("BOOM! Sobreposicao detectada: %d%s e %d%s\n", 
                             aux->bomba.comprimento, aux->bomba.cor, 
                             aux2->bomba.comprimento, aux2->bomba.cor);
+                    return 0;
                 }
             aux2 = aux2->prox;
         }
@@ -109,3 +255,5 @@ int validarCoordenadas(Kit *kit, int linhas, int colunas){
     }
     return 1;
 }
+
+//tem que dar free nos auxs?

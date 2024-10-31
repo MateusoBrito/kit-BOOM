@@ -16,7 +16,7 @@ typedef struct NO{
 typedef struct NO* Kit;
 
 typedef struct Par{
-    int cor;
+    char cor[3];
     int nome;
 } Par;
 
@@ -34,14 +34,16 @@ int insereBomba(Kit *k, Bomba bomba);
 void liberaKit(Kit *k);
 Kit* leituraConfiguracao(char *fileConfiguracao);
 int converteCorParaNumero(char *cor);
-Par **alocarMatriz(int linhas, int colunas);
-void liberarMatriz(int **matriz, int linhas);
+Par **alocarCaixa(int linhas, int colunas);
+void liberarCaixa(Par **matriz, int linhas);
 Par **montarCaixa(Kit *kit, int linhas, int colunas);
-void imprimirMatriz(Par **matriz, int linhas, int colunas);
-void validarAdjacencia(Par **caixa, int linhas, int colunas);
+void imprimirCaixa(Par **matriz, int linhas, int colunas);
+int validarAdjacencia(Par **caixa, int linhas, int colunas);
 Composicao* leituraComposicao(char* fileComposicao, int *numBombas);
 int verificarComposicao(Kit *kit, Composicao *composicao, int numBombas);
 int verificarSobreposicao(Kit *kit);
 int validarCoordenadas(Kit *kit, int linhas, int colunas);
+void saidaInvalido();
+void exibirTempos();
 
 #endif
