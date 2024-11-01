@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "kitBoom.h"
 #include <string.h>
-#include <sys/resource.h>
-
 Kit* leituraConfiguracao(char* fileConfiguracao){
     FILE *arquivo = fopen(fileConfiguracao, "r");
     if (!arquivo) {
@@ -53,15 +51,6 @@ Composicao *leituraComposicao(char *fileComposicao, int *numBombas){
     }else{
         return composicao;
     }
-
-    /*
-    printf("Composicao lida:\n");
-    for (int i = 0; i < *numBombas; i++) {
-        printf("Bomba %d: Comprimento = %d, Quantidade = %d, Cor = %s\n",
-               i + 1, composicao[i].comprimento, 
-               composicao[i].quantidade, composicao[i].cor);
-    }
-    */
 }
 
 void imprimirCaixa(Par **matriz, int linhas, int colunas) {
@@ -75,20 +64,30 @@ void imprimirCaixa(Par **matriz, int linhas, int colunas) {
     }
 }
 
-void saidaInvalido(){
-    printf("A configuracao esta invalida!\n");
-}
+void saidaResultado(int validezComposicao, int validezSobreposicao,int validezCoordenadas,int validezAdjacencia){
+    printf("\n===== VALIDEZ DO KIT =====\n");
+    if(!validezComposicao){
+        printf("A composicao esta invalida!\n");
+    } else {
+        printf("A composicao esta valida!\n");
+    }
 
-void exibirTempos() {
-    struct rusage uso;
+    if(!validezSobreposicao){
+        printf("Existe sobreposicao!\n");
+    } else {
+        printf("Nao existe sobreposicao!\n");
+    }
 
-    getrusage(RUSAGE_SELF, &uso);
+    if(!validezCoordenadas){
+        printf("Existe bomba que ultrapassa os limites!\n");
+    } else {
+        printf("As bombas cabem na caixa!\n");
+    }
 
-    // Tempo de usuário em segundos e microssegundos
-    printf("Tempo de Usuário: %ld.%06ld segundos\n", 
-           uso.ru_utime.tv_sec, uso.ru_utime.tv_usec);
+    if(!validezAdjacencia){
+        printf("Existe bombas de mesma cor estao adjascentes!\n");
+    } else {
+        printf("As bombas estao espalhadas corretamente!\n");
+    }
 
-    // Tempo de sistema em segundos e microssegundos
-    printf("Tempo de Sistema: %ld.%06ld segundos\n", 
-           uso.ru_stime.tv_sec, uso.ru_stime.tv_usec);
 }

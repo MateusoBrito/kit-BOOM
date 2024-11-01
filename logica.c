@@ -112,41 +112,6 @@ Par** montarCaixa(Kit *kit,int linhas, int colunas) {
     return caixa;
 }
 
-/*
-Bomba*** montarCaixa2(Kit *kit,int linhas, int colunas) {
-    Bomba ***caixa = alocarMatriz(linhas, colunas);
-    if(caixa == NULL){
-        printf("Erro ao alocar a matriz caixa.\n");
-        return NULL;
-    }
-    
-    for (int i = 0; i < linhas; i++) {
-        for (int j = 0; j < colunas; j++) {
-            caixa[i][j] = NULL;
-        }
-    }
-
-    NO *bombaAtual = *kit;
-    while(bombaAtual != NULL){
-        Bomba *b = &(bombaAtual->bomba);
-
-        for(int i=b->xInicial-1; i<b->xFinal;i++){
-            for(int j=b->yInicial-1; j<b->yFinal;j++){
-                if(i >= 0 && i < linhas && j >= 0 && j < colunas){
-                    caixa[i][j] = b;
-
-                }
-            }
-        }
-        bombaAtual = bombaAtual -> prox;
-    }
-
-    liberarNO(bombaAtual);
-    return caixa;
-}
-*/
-
-//mudar nome da funcao
 int validarAdjacencia(Par **caixa, int linhas, int colunas){
     for(int i=0; i<linhas;i++){
         for(int j=0; j<colunas;j++){

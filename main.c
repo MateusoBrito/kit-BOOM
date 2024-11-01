@@ -49,24 +49,21 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    if(!verificarComposicao(kit, composicao, numBombas)){
-        return 0;
-    }
+    int validezComposicao = verificarComposicao(kit, composicao, numBombas);
 
     free(composicao); 
 
     Par **caixa = montarCaixa(kit, linhas, colunas);
     imprimirCaixa(caixa,linhas,colunas);
 
-    if(!verificarSobreposicao(kit) || !validarCoordenadas(kit, linhas, colunas) || !validarAdjacencia(caixa,linhas,colunas)){
-        saidaInvalido();
-        return 0;
-    }
+    int validezSobreposicao = verificarSobreposicao(kit);
+    int validezCoordenadas = validarCoordenadas(kit, linhas, colunas);
+    int validezAdjacencia = validarAdjacencia(caixa,linhas,colunas);
+
+    saidaResultado(validezComposicao, validezSobreposicao, validezCoordenadas, validezAdjacencia);
 
     liberaKit(kit);
     liberarCaixa(caixa,linhas);
-
-    exibirTempos();
 
     return 0;
 }

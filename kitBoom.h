@@ -43,7 +43,6 @@ Composicao* leituraComposicao(char* fileComposicao, int *numBombas);
 int verificarComposicao(Kit *kit, Composicao *composicao, int numBombas);
 int verificarSobreposicao(Kit *kit);
 int validarCoordenadas(Kit *kit, int linhas, int colunas);
-void saidaInvalido();
-void exibirTempos();
+void saidaResultado(int validezComposicao, int validezSobreposicao,int validezCoordenadas,int validezAdjacencia);
 
 #endif
