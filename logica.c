@@ -86,12 +86,12 @@ Par** montarCaixa(Kit *kit,int linhas, int colunas) {
         return NULL;
     }
     
-    //for (int i = 0; i < linhas; i++) {
-    //    for (int j = 0; j < colunas; j++) { 
-    //        strcpy(caixa[i][j].cor, NULL);
-    //        caixa[i][j].nome = 0;
-    //    }
-    //}
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) { 
+            strcpy(caixa[i][j].cor, "NULL");
+            caixa[i][j].nome = 0;
+        }
+    }
 
     NO *bombaAtual = *kit;
     while(bombaAtual != NULL){
