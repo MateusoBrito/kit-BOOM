@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "kitBoom.h"
 #include <string.h>
+
 Kit* leituraConfiguracao(char* fileConfiguracao){
     FILE *arquivo = fopen(fileConfiguracao, "r");
     if (!arquivo) {

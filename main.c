@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 
     saidaResultado(validezComposicao, validezSobreposicao, validezCoordenadas, validezAdjacencia);
 
-    liberaKit(kit);
+    liberarKit(kit);
     liberarCaixa(caixa,linhas);
 
     return 0;

@@ -30,7 +30,7 @@ free (q);
 
 int insereBomba(Kit *k, Bomba bomba){
     if(k==NULL) return 0;
-    NO* novo = alocarNO();
+    NO* novo = alocarBomba();
     if(novo == NULL) {
         printf("Erro ao alocaro nó!\n");
         return 0;
@@ -47,7 +47,7 @@ void liberarKit(Kit *k){
         while((*k)!=NULL){
             aux = *k;
             *k = (*k)->prox;
-            liberarNO(aux);
+            liberarBomba(aux);
         }
         free(k);
     }
@@ -108,7 +108,7 @@ Par** montarCaixa(Kit *kit,int linhas, int colunas) {
         bombaAtual = bombaAtual -> prox;
     }
 
-    liberarNO(bombaAtual);
+    liberarBomba(bombaAtual);
     return caixa;
 }
 
