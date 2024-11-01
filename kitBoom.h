@@ -28,12 +28,11 @@ typedef struct {
 
 Kit *criarKit();
 int kitVazio(Kit *k);
-NO* alocarNO();
-void liberarNO(NO *q);
+NO* alocarBomba();
+void liberarBomba(NO *q);
 int insereBomba(Kit *k, Bomba bomba);
-void liberaKit(Kit *k);
+void liberarKit(Kit *k);
 Kit* leituraConfiguracao(char *fileConfiguracao);
-int converteCorParaNumero(char *cor);
 Par **alocarCaixa(int linhas, int colunas);
 void liberarCaixa(Par **matriz, int linhas);
 Par **montarCaixa(Kit *kit, int linhas, int colunas);

@@ -20,11 +20,11 @@ int kitVazio (Kit *k){
     return 0; 
 }
 
-NO* alocarNO () {
+NO* alocarBomba () {
 return (NO *) malloc ( sizeof (NO));
 }
 
-void liberarNO (NO* q){
+void liberarBomba (NO* q){
 free (q);
 }
 
@@ -41,7 +41,7 @@ int insereBomba(Kit *k, Bomba bomba){
     return 1;
 }
 
-void liberaKit(Kit *k){
+void liberarKit(Kit *k){
     if(k != NULL){
         NO *aux;
         while((*k)!=NULL){
