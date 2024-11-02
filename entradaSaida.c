@@ -72,7 +72,7 @@ int leituraComposicao(char *fileComposicao, Kit *kit){
         printf("Composicao incompleta!\n");
         return 0;
     }
-    printf("Composicao valida!\n");
+    
     return 1;
 }
 
