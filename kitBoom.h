@@ -20,12 +20,6 @@ typedef struct Par{
     int nome;
 } Par;
 
-typedef struct {
-    int quantidade;
-    int comprimento;
-    char cor[3];
-} Composicao;
-
 Kit *criarKit();
 int kitVazio(Kit *k);
 NO* alocarBomba();
@@ -33,13 +27,12 @@ void liberarBomba(NO *q);
 int insereBomba(Kit *k, Bomba bomba);
 void liberarKit(Kit *k);
 Kit* leituraConfiguracao(char *fileConfiguracao);
-Composicao* leituraComposicao(char* fileComposicao, int *numBombas);
+int leituraComposicao(char *fileComposicao, Kit *kit);
 Par **alocarCaixa(int linhas, int colunas);
 void liberarCaixa(Par **matriz, int linhas);
 Par **montarCaixa(Kit *kit, int linhas, int colunas);
 void imprimirCaixa(Par **matriz, int linhas, int colunas);
 int validarAdjacencia(Par **caixa, int linhas, int colunas);
-int validarComposicao(Kit *kit, Composicao *composicao, int numBombas);
 int validarSobreposicao(Kit *kit);
 int validarCoordenadas(Kit *kit, int linhas, int colunas);
 void imprimirCabecalho();

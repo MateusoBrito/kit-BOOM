@@ -40,11 +40,9 @@ int main(int argc, char *argv[]) {
     Kit *kit = leituraConfiguracao(fileConfiguracao);
 
     int numBombas;
-    Composicao *composicao = leituraComposicao(fileComposicao, &numBombas);
     Par **caixa = montarCaixa(kit, linhas, colunas);
 
-    int validezComposicao = validarComposicao(kit, composicao, numBombas);
-    free(composicao); 
+    int validezComposicao = leituraComposicao(fileComposicao, kit); 
 
     imprimirCaixa(caixa,linhas,colunas);
 

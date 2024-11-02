@@ -144,42 +144,6 @@ int validarAdjacencia(Par **caixa, int linhas, int colunas){
     return 1;
 }
 
-int validarComposicao(Kit *kit, Composicao *composicao, int numBombas){
-    NO *bombaAtual = *kit;
-    while(bombaAtual != NULL) {
-        Bomba b = bombaAtual->bomba;
-        int encontrada = 0;
-
-        for(int i=0; i<numBombas; i++){
-            if(strcmp(b.cor, composicao[i].cor) == 0 && b.comprimento == composicao[i].comprimento){
-                composicao[i].quantidade--;
-                encontrada = 1;
-                if(composicao[i]. quantidade < 0){
-                    printf("Existe bomba %d%s a mais!\n", composicao[i].comprimento, composicao[i].cor);
-                    return 0;
-                }
-                break;
-            }
-        }
-
-        if(!encontrada){
-            printf("Bomba %d%s desconhecida!\n", b.comprimento, b.cor);
-            return 0;
-        }
-
-        bombaAtual = bombaAtual->prox;
-    }
-    
-    for(int i=0; i<numBombas; i++){ //verifica se tem bomba faltando
-        if(composicao[i].quantidade > 0){
-            printf("Falta bomba %d%s!\n", composicao[i].comprimento, composicao[i].cor);
-                    return 0;
-        }
-    }
-
-    return 1;
-}
-
 int validarSobreposicao(Kit *kit){
     NO *aux = *kit;
 

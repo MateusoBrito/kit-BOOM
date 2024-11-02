@@ -26,32 +26,54 @@ Kit* leituraConfiguracao(char* fileConfiguracao){
     return kit;
 }
 
-Composicao *leituraComposicao(char *fileComposicao, int *numBombas){
+int leituraComposicao(char *fileComposicao, Kit *kit){
     FILE *arquivo = fopen(fileComposicao, "r");
     if(!arquivo){
         printf("Erro ao abrir o arquivo de composicao\n");
-        return NULL;
+        return 0;
     }
 
-    Composicao *composicao = malloc(sizeof(Composicao)*36);
-    *numBombas = 0;
     int completeza = 0;
+    NO *bombaAtual = *kit;
 
-    while(!feof(arquivo)){
-        fscanf(arquivo, "%d %d%s", &composicao[*numBombas].quantidade, 
-                &composicao[*numBombas].comprimento, composicao[*numBombas].cor);
-        completeza += (composicao[*numBombas].quantidade * composicao[*numBombas].comprimento);
-        (*numBombas)++;
+    while(!feof(arquivo) && bombaAtual != NULL){
+        int quantidade, comprimento;
+        char cor[3];
+
+        fscanf(arquivo, "%d %d%s", &quantidade, &comprimento, cor);
+        completeza += (quantidade * comprimento);
+
+        int bombasEncontradas = 0;
+
+        while(bombaAtual != NULL) {
+            Bomba b = bombaAtual->bomba;
+            if(strcmp(b.cor, cor) == 0 && b.comprimento == comprimento){
+                bombasEncontradas++;
+            }
+            bombaAtual = bombaAtual->prox;
+        }
+
+        if(bombasEncontradas > quantidade){
+            printf("Existe(m) bomba(s) %d%s a mais em sua configuracao!\n", comprimento, cor);
+            fclose(arquivo);
+            return 0;
+        }else if(bombasEncontradas < quantidade){
+            printf("Composicao incompleta: falta(m) bomba(s) %d%s em sua configuracao!\n", comprimento, cor);
+            fclose(arquivo);
+            return 0;
+        }
+
+        bombaAtual = *kit;
     }
 
     fclose(arquivo);
-    
+
     if(completeza < 36){
         printf("Composicao incompleta!\n");
-        return NULL;
-    }else{
-        return composicao;
+        return 0;
     }
+    printf("Composicao valida!\n");
+    return 1;
 }
 
 void imprimirCaixa(Par **matriz, int linhas, int colunas) {
