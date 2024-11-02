@@ -92,7 +92,7 @@ void imprimirSaida(int validezComposicao, int validezSobreposicao,int validezCoo
     }
 
     if(!validezAdjacencia){
-        printf("Existe bombas de mesma cor estao adjascentes!\n");
+        printf("Existe bombas de mesma cor estao adjacentes!\n");
     } else {
         printf("As bombas estao espalhadas corretamente!\n");
     }

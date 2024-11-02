@@ -45,5 +45,4 @@ int validarCoordenadas(Kit *kit, int linhas, int colunas);
 void imprimirCabecalho();
 void imprimirSaida(int validezComposicao, int validezSobreposicao,int validezCoordenadas,int validezAdjacencia);
 
-
 #endif
