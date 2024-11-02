@@ -11,7 +11,7 @@ Kit* leituraConfiguracao(char* fileConfiguracao){
     }
 
     Kit *kit = criarKit();
-    Bomba bomba; //liberar este espaco de memoria?
+    Bomba bomba;
 
     int i=1;
     while (!feof(arquivo)) {
@@ -60,46 +60,59 @@ int leituraComposicao(char *fileComposicao, Kit *kit){
 }
 
 void imprimirCaixa(Par **matriz, int linhas, int colunas) {
-    printf("Caixa de Bombas:\n");
-    printf("(nome,cor)\n");
+    printf("\n=============== CAIXA DE BOMBAS ===============\n");
+    printf("|                (Numero,Cor)                  |\n");
     for (int i = 0; i < linhas; i++) {
-        for (int j = 0; j < colunas; j++) {
+        printf("| ");
+        for(int j = 0; j < colunas; j++) {
             printf("(%d,%s) ", matriz[i][j].nome, matriz[i][j].cor); 
         }
-        printf("\n");
+        printf("|\n");
     }
+    printf("================================================\n");
 }
 
 void imprimirCabecalho(){
-    printf("\n===== EXPLOSIVOS JEPSLON =====\n");
-    printf("          Kit BOOM!     \n\n");
+    printf("\n============= EXPLOSIVOS JEPSLON =============\n");
+    printf("                   Kit BOOM!     \n\n");
     return;
 }
 
 void imprimirSaida(int validezComposicao, int validezSobreposicao,int validezCoordenadas,int validezAdjacencia){
-    printf("\n===== VALIDEZ DO KIT =====\n");
+    printf("\n=============== VALIDEZ DO KIT ===============\n\n");
+    int kitValido = 1;
     if(!validezComposicao){
-        printf("A composicao esta invalida!\n");
+        printf("COMPOSICAO: invalida\n");
+        kitValido = 0;
     } else {
-        printf("A composicao esta valida!\n");
+        printf("COMPOSICAO: valida\n");
     }
 
     if(!validezSobreposicao){
-        printf("Existe sobreposicao!\n");
+        printf("SOBREPOSICAO: existe\n");
+        kitValido = 0;
     } else {
-        printf("Nao existe sobreposicao!\n");
+        printf("SOBREPOSICAO: nao existe\n");
     }
 
     if(!validezCoordenadas){
-        printf("Existe bomba que ultrapassa os limites!\n");
+        printf("COORDENADAS: incorretas\n");
+        kitValido = 0;
     } else {
-        printf("As bombas cabem na caixa!\n");
+        printf("COORDENADAS: corretas\n");
     }
 
     if(!validezAdjacencia){
-        printf("Existe bombas de mesma cor estao adjacentes!\n");
+        printf("BOMBAS ADJACENTES: sim\n");
+        kitValido = 0;
     } else {
-        printf("As bombas estao espalhadas corretamente!\n");
+        printf("BOMBAS ADJACENTES: nao\n");
+    }
+
+    if(kitValido){
+        printf("\nRESULTADO: KIT VALIDO!\n");
+    }else{
+        printf("\nRESULTADO: KIT INVALIDO!\n");
     }
 
 }

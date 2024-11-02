@@ -125,10 +125,10 @@ int validarComposicao(Kit *kit, int quantidade, int comprimento, char *cor){
     }
 
     if(bombasEncontradas > quantidade){
-        printf("Existe(m) bomba(s) %d%s a mais em sua configuracao!\n", comprimento, cor);
+        printf("Composicao invalida: existe(m) bomba(s) %d%s a mais em sua configuracao!\n", comprimento, cor);
         return 0;
     }else if(bombasEncontradas < quantidade){
-        printf("Composicao incompleta: falta(m) bomba(s) %d%s em sua configuracao!\n", comprimento, cor);
+        printf("Composicao invalida: falta(m) bomba(s) %d%s em sua configuracao!\n", comprimento, cor);
         return 0;
     }
     return 1;
@@ -139,25 +139,25 @@ int validarAdjacencia(Par **caixa, int linhas, int colunas){
         for(int j=0; j<colunas;j++){
             if(i-1 >= 0 && caixa[i-1][j].nome != caixa[i][j].nome){
                 if(strcmp(caixa[i-1][j].cor,caixa[i][j].cor)==0){
-                    printf("Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i-1][j].nome,caixa[i][j].nome);
+                    printf("BOOM! Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i-1][j].nome,caixa[i][j].nome);
                     return 0;
                 }
             }
             if(j+1 < colunas && caixa[i][j+1].nome != caixa[i][j].nome){
                 if(strcmp(caixa[i][j+1].cor,caixa[i][j].cor)==0){
-                    printf("Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i][j+1].nome,caixa[i][j].nome);
+                    printf("BOOM! Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i][j+1].nome,caixa[i][j].nome);
                     return 0;
                 }
             }
             if(i+1 < linhas && caixa[i+1][j].nome != caixa[i][j].nome){
                 if(strcmp(caixa[i+1][j].cor, caixa[i][j].cor)==0){
-                    printf("Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i+1][j].nome,caixa[i][j].nome);
+                    printf("BOOM! Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i+1][j].nome,caixa[i][j].nome);
                     return 0;
                 }
             }
             if(j-1 >= 0 && caixa[i][j-1].nome != caixa[i][j].nome && j-1>=0){
                 if(strcmp(caixa[i][j-1].cor, caixa[i][j].cor)==0){
-                    printf("Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i][j-1].nome,caixa[i][j].nome);
+                    printf("BOOM! Bomba %d e Bomba %d estao adjacentes e sao de mesma cor!\n",caixa[i][j-1].nome,caixa[i][j].nome);
                     return 0;
                 }
             }

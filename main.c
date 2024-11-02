@@ -20,37 +20,31 @@ int main(int argc, char *argv[]) {
                 fileConfiguracao = optarg;
                 break;
             default:
-                //VER ISSO DEPOIS
-                fprintf(stderr, "Uso: %s -k <arquivo composição> -c <arquivo configuração>\n", argv[0]);
-                exit(EXIT_FAILURE);
+                printf("\nUse: ./<arquivoexecutavel> -k <arquivo composicao> -c <arquivo configuracao>\n\n");
+                return 0;
         }
     }
 
     if(fileConfiguracao == NULL){
-        printf("O arquivo de configuração não foi especificado.\n");
+        printf("O arquivo de configuracao nao foi especificado.\n");
         return 0;
     }
 
     if(fileComposicao == NULL){
-        printf("O arquivo de composição não foi especificado.\n");
+        printf("O arquivo de composicao nao foi especificado.\n");
         return 0;
     }
 
-
     Kit *kit = leituraConfiguracao(fileConfiguracao);
+    Par **caixa = montarCaixa(kit, linhas, colunas); 
 
-    int numBombas;
-    Par **caixa = montarCaixa(kit, linhas, colunas);
-
-    int validezComposicao = leituraComposicao(fileComposicao, kit); 
-
-    imprimirCaixa(caixa,linhas,colunas);
-
+    int validezComposicao = leituraComposicao(fileComposicao, kit);
     int validezSobreposicao = validarSobreposicao(kit);
     int validezCoordenadas = validarCoordenadas(kit, linhas, colunas);
     int validezAdjacencia = validarAdjacencia(caixa,linhas,colunas);
 
     imprimirSaida(validezComposicao, validezSobreposicao, validezCoordenadas, validezAdjacencia);
+    imprimirCaixa(caixa,linhas,colunas);
 
     liberarKit(kit);
     liberarCaixa(caixa,linhas);
