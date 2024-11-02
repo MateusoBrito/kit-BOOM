@@ -112,38 +112,6 @@ Par** montarCaixa(Kit *kit,int linhas, int colunas) {
     return caixa;
 }
 
-int validarAdjacencia2(Kit *kit){
-    NO *aux = *kit;
-
-    // Itera por cada bomba no kit
-    while (aux != NULL) {
-        NO *aux2 = aux->prox;
-
-        // Compara a bomba atual com todas as bombas subsequentes
-        while (aux2 != NULL) {
-            // Verifica se as bombas são adjacentes
-            if(strcmp(aux->bomba.cor, aux2->bomba.cor)==0){
-                int adjacente = 
-                (aux->bomba.xFinal + 1 == aux2->bomba.xInicial && aux->bomba.yFinal == aux2->bomba.yInicial) || // direita
-                (aux->bomba.xInicial - 1 == aux2->bomba.xFinal && aux->bomba.yInicial == aux2->bomba.yFinal) || // esquerda
-                (aux->bomba.yFinal + 1 == aux2->bomba.yInicial && aux->bomba.xFinal == aux2->bomba.xInicial) || // abaixo
-                (aux->bomba.yInicial - 1 == aux2->bomba.yFinal && aux->bomba.xInicial == aux2->bomba.xFinal);   // acima
-
-                // Se forem adjacentes e da mesma cor, retorna erro de adjacência
-                if (adjacente) {
-                    printf("BOMBA! As bombas %d%s e %d%s estão adjacentes e têm a mesma cor!\n", 
-                            aux->bomba.comprimento, aux->bomba.cor, 
-                            aux2->bomba.comprimento, aux2->bomba.cor);
-                }
-            }   
-        
-            aux2 = aux2->prox;
-        }
-        aux = aux->prox;
-    }
-    return 1; // Retorna 1 se não houver bombas adjacentes de mesma cor
-}
-
 int validarAdjacencia(Par **caixa, int linhas, int colunas){
     for(int i=0; i<linhas;i++){
         for(int j=0; j<colunas;j++){

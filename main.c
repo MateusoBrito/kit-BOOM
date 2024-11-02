@@ -50,8 +50,7 @@ int main(int argc, char *argv[]) {
 
     int validezSobreposicao = validarSobreposicao(kit);
     int validezCoordenadas = validarCoordenadas(kit, linhas, colunas);
-    //int validezAdjacencia = validarAdjacencia(caixa,linhas,colunas);
-    int validezAdjacencia = validarAdjacencia2(kit);
+    int validezAdjacencia = validarAdjacencia(caixa,linhas,colunas);
 
     imprimirSaida(validezComposicao, validezSobreposicao, validezCoordenadas, validezAdjacencia);
 
