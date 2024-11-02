@@ -1,22 +1,25 @@
-TARGET = kitBoom
+CC = gcc
 
-all: $(TARGET)
+OBJ = main.o logica.o entradaSaida.o
 
-$(TARGET): entradaSaida.o logica.o main.o
+EXEC = kitBoom
 
-	gcc entradaSaida.o logica.o main.o -o $(TARGET)
+all: $(EXEC)
 
-entradaSaida.o: entradaSaida.c kitBoom.h
-	gcc -c entradaSaida.c -o entradaSaida.o
-
-logica.o: logica.c kitBoom.h
-	gcc -c logica.c -o logica.o
+$(EXEC): $(OBJ)
+	$(CC) -o $(EXEC) $(OBJ)
 
 main.o: main.c kitBoom.h
-	gcc -c main.c -o main.o
+	$(CC) -c main.c
+
+entradaSaida.o: entradaSaida.c kitBoom.h
+	$(CC) -c entradaSaida.c
+
+logica.o: logica.c kitBoom.h
+	$(CC) -c logica.c
 
 clean:
-	rm -rf *.o $(TARGET)
+	rm -rf *.o $(EXEC)
 
 run: all
-	./$(TARGET) -k composicao.txt -c configuracao.txt
+	./$(EXEC) -k composicao.txt -c configuracao.txt
