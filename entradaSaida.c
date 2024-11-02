@@ -60,16 +60,15 @@ int leituraComposicao(char *fileComposicao, Kit *kit){
 }
 
 void imprimirCaixa(Par **matriz, int linhas, int colunas) {
-    printf("\n=============== CAIXA DE BOMBAS ===============\n");
-    printf("|                (Numero,Cor)                  |\n");
+    printf("\n============== CAIXA DE BOMBAS ==============\n");
+    printf("                (Numero,Cor)                  \n");
     for (int i = 0; i < linhas; i++) {
-        printf("| ");
         for(int j = 0; j < colunas; j++) {
             printf("(%d,%s) ", matriz[i][j].nome, matriz[i][j].cor); 
         }
-        printf("|\n");
+        printf("\n");
     }
-    printf("================================================\n");
+    printf("==============================================\n");
 }
 
 void imprimirCabecalho(){
