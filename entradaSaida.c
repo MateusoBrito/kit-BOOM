@@ -34,36 +34,19 @@ int leituraComposicao(char *fileComposicao, Kit *kit){
     }
 
     int completeza = 0;
-    NO *bombaAtual = *kit;
-
-    while(!feof(arquivo) && bombaAtual != NULL){
+    while(!feof(arquivo)){
         int quantidade, comprimento;
         char cor[3];
 
         fscanf(arquivo, "%d %d%s", &quantidade, &comprimento, cor);
         completeza += (quantidade * comprimento);
 
-        int bombasEncontradas = 0;
+        int validezComposicao = validarComposicao(kit, quantidade,comprimento,cor);
 
-        while(bombaAtual != NULL) {
-            Bomba b = bombaAtual->bomba;
-            if(strcmp(b.cor, cor) == 0 && b.comprimento == comprimento){
-                bombasEncontradas++;
-            }
-            bombaAtual = bombaAtual->prox;
-        }
-
-        if(bombasEncontradas > quantidade){
-            printf("Existe(m) bomba(s) %d%s a mais em sua configuracao!\n", comprimento, cor);
-            fclose(arquivo);
-            return 0;
-        }else if(bombasEncontradas < quantidade){
-            printf("Composicao incompleta: falta(m) bomba(s) %d%s em sua configuracao!\n", comprimento, cor);
+        if(!validezComposicao){
             fclose(arquivo);
             return 0;
         }
-
-        bombaAtual = *kit;
     }
 
     fclose(arquivo);

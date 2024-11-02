@@ -32,6 +32,7 @@ Par **alocarCaixa(int linhas, int colunas);
 void liberarCaixa(Par **matriz, int linhas);
 Par **montarCaixa(Kit *kit, int linhas, int colunas);
 void imprimirCaixa(Par **matriz, int linhas, int colunas);
+int validarComposicao(Kit *kit, int quantidade, int comprimento, char *cor);
 int validarAdjacencia(Par **caixa, int linhas, int colunas);
 int validarSobreposicao(Kit *kit);
 int validarCoordenadas(Kit *kit, int linhas, int colunas);

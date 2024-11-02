@@ -112,6 +112,28 @@ Par** montarCaixa(Kit *kit,int linhas, int colunas) {
     return caixa;
 }
 
+int validarComposicao(Kit *kit, int quantidade, int comprimento, char *cor){
+    int bombasEncontradas = 0;
+
+    NO *bombaAtual = *kit;
+    while(bombaAtual != NULL) {
+        Bomba b = bombaAtual->bomba;
+        if(strcmp(b.cor, cor) == 0 && b.comprimento == comprimento){
+            bombasEncontradas++;
+        }
+        bombaAtual = bombaAtual->prox;
+    }
+
+    if(bombasEncontradas > quantidade){
+        printf("Existe(m) bomba(s) %d%s a mais em sua configuracao!\n", comprimento, cor);
+        return 0;
+    }else if(bombasEncontradas < quantidade){
+        printf("Composicao incompleta: falta(m) bomba(s) %d%s em sua configuracao!\n", comprimento, cor);
+        return 0;
+    }
+    return 1;
+}
+
 int validarAdjacencia(Par **caixa, int linhas, int colunas){
     for(int i=0; i<linhas;i++){
         for(int j=0; j<colunas;j++){
