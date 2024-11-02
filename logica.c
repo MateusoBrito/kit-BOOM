@@ -21,11 +21,11 @@ int kitVazio (Kit *k){
 }
 
 NO* alocarBomba () {
-return (NO *) malloc ( sizeof (NO));
+    return (NO *) malloc ( sizeof (NO));
 }
 
 void liberarBomba (NO* q){
-free (q);
+    free (q);
 }
 
 int insereBomba(Kit *k, Bomba bomba){
@@ -144,7 +144,7 @@ int validarAdjacencia(Par **caixa, int linhas, int colunas){
     return 1;
 }
 
-int verificarComposicao(Kit *kit, Composicao *composicao, int numBombas){
+int validarComposicao(Kit *kit, Composicao *composicao, int numBombas){
     NO *bombaAtual = *kit;
     while(bombaAtual != NULL) {
         Bomba b = bombaAtual->bomba;
@@ -180,7 +180,7 @@ int verificarComposicao(Kit *kit, Composicao *composicao, int numBombas){
     return 1;
 }
 
-int verificarSobreposicao(Kit *kit){
+int validarSobreposicao(Kit *kit){
     NO *aux = *kit;
 
     while(aux != NULL){
@@ -220,5 +220,3 @@ int validarCoordenadas(Kit *kit, int linhas, int colunas){
     }
     return 1;
 }
-
-//tem que dar free nos auxs?

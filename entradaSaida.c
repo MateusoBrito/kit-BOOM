@@ -65,7 +65,13 @@ void imprimirCaixa(Par **matriz, int linhas, int colunas) {
     }
 }
 
-void saidaResultado(int validezComposicao, int validezSobreposicao,int validezCoordenadas,int validezAdjacencia){
+void imprimirCabecalho(){
+    printf("\n===== EXPLOSIVOS JEPSLON =====\n");
+    printf("          Kit BOOM!     \n\n");
+    return;
+}
+
+void imprimirSaida(int validezComposicao, int validezSobreposicao,int validezCoordenadas,int validezAdjacencia){
     printf("\n===== VALIDEZ DO KIT =====\n");
     if(!validezComposicao){
         printf("A composicao esta invalida!\n");
