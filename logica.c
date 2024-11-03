@@ -62,7 +62,7 @@ Par **alocarCaixa(int linhas, int colunas) {
         return 0;
     }
     for (int i = 0; i < linhas; i++) {
-        matriz[i] = (Par *)malloc((2*colunas) * sizeof(Par));
+        matriz[i] = (Par *)malloc(colunas * sizeof(Par));
         if (matriz[i] == NULL) {
             printf("Erro ao alocar memória para a coluna %d.\n", i);
             return 0;
