@@ -39,23 +39,29 @@ int main(int argc, char *argv[]) {
     struct timeval start, end;
     gettimeofday(&start, NULL);
 
-    struct timeval io_start, io_end;
-    gettimeofday(&io_start, NULL);
+    struct timeval entrada_start, entrada_end;
+    gettimeofday(&entrada_start, NULL);
 
     Kit *kit = leituraConfiguracao(fileConfiguracao);
+    int validezComposicao = leituraComposicao(fileComposicao, kit);
+
+    gettimeofday(&entrada_end, NULL);
+    double entrada_time = (entrada_end.tv_sec - entrada_start.tv_sec) + (entrada_end.tv_usec - entrada_start.tv_usec) / 1000000.0;
+
     Par **caixa = montarCaixa(kit, linhas, colunas); 
 
-    gettimeofday(&io_end, NULL);
-    double io_time = (io_end.tv_sec - io_start.tv_sec) + (io_end.tv_usec - io_start.tv_usec) / 1000000.0;
-
-
-    int validezComposicao = leituraComposicao(fileComposicao, kit);
     int validezSobreposicao = validarSobreposicao(kit);
     int validezCoordenadas = validarCoordenadas(kit, linhas, colunas);
     int validezAdjacencia = validarAdjacencia(caixa,linhas,colunas);
 
+    struct timeval saida_start, saida_end;
+    gettimeofday(&saida_start, NULL);
+
     imprimirSaida(validezComposicao, validezSobreposicao, validezCoordenadas, validezAdjacencia);
     imprimirCaixa(caixa,linhas,colunas);
+
+    gettimeofday(&saida_end, NULL);
+    double saida_time = (saida_end.tv_sec - saida_start.tv_sec) + (saida_end.tv_usec - saida_start.tv_usec) / 1000000.0;
 
     liberarKit(kit);
     liberarCaixa(caixa,linhas);
@@ -65,7 +71,7 @@ int main(int argc, char *argv[]) {
     double elapsed_time = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
 
 
-    printf("\nTempo de E/S: %.6f segundos\n", io_time);
+    printf("\nTempo de Entrada e Saida: %.6f segundos\n", entrada_time+saida_time);
     printf("Tempo total (real): %.6f segundos\n", elapsed_time);
 
     return 0;

@@ -107,8 +107,6 @@ Par** montarCaixa(Kit *kit,int linhas, int colunas) {
         }
         bombaAtual = bombaAtual -> prox;
     }
-
-    liberarBomba(bombaAtual);
     return caixa;
 }
 

@@ -49,7 +49,7 @@ int leituraComposicao(char *fileComposicao, Kit *kit){
         }
     }
 
-    fclose(arquivo);
+    fclose(arquivo); 
 
     if(completeza < 36){
         printf("Composicao incompleta!\n");
