@@ -22,4 +22,5 @@ clean:
 	rm -rf *.o $(EXEC)
 
 run: all
-	./$(EXEC) -k composicao.txt -c configuracao.txt
+	./$(EXEC) -k configuracoes/composicao.txt -c configuracoes/configuracao.txt
+	./$(EXEC) -k configuracoes/composicao2.txt -c configuracoes/configuracao2.txt
