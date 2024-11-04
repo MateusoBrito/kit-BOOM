@@ -55,6 +55,10 @@ int main(int argc, char *argv[]) {
 
     Par **caixa = montarCaixa(kit, linhas, colunas); 
 
+    for (volatile long long int i = 0; i < 10000000000; i++) {
+    // Loop vazio apenas para consumir tempo de CPU
+}
+
     int validezSobreposicao = validarSobreposicao(kit);
     int validezCoordenadas = validarCoordenadas(kit, linhas, colunas);
     int validezAdjacencia = validarAdjacencia(caixa,linhas,colunas);
